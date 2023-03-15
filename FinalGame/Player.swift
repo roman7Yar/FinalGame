@@ -10,6 +10,7 @@ import SpriteKit
 struct PlayerSetup {
     let name: PlayerSkin
     let speed: CGFloat
+    var calculatedSpeed: CGFloat { return speed * 800 }
     var shields = 0
     var breakthrouth = 0
     var price: Int? = nil
@@ -21,19 +22,19 @@ enum PlayerSkin: String, CaseIterable {
         switch self {
         case .rocket0:
             return PlayerSetup(name: .rocket0,
-                               speed: 800)
+                               speed: 1)
         case .rocket1:
             return PlayerSetup(name: .rocket1,
-                               speed: 1500,
+                               speed: 2,
                                price: 300)
         case .rocket2:
             return PlayerSetup(name: .rocket2,
-                               speed: 1200,
+                               speed: 1.5,
                                shields: 5,
                                price: 600)
         case .rocket3:
             return PlayerSetup(name: .rocket3,
-                               speed: 1200,
+                               speed: 1.5,
                                breakthrouth: 3,
                                price: 1200)
         }
@@ -95,12 +96,12 @@ class Player: SKSpriteNode {
     var playerSpeed = CGFloat(800) // per second
    
     var updateScoreCallBack: ((Int, Bool) -> ())?
-    var bonusCallBack: ((Int, Int) -> ())?
+    var bonusCallBack: (() -> ())?
     var playerLandedCallBack: (() -> ())?
   
     var shields = 0 {
         didSet {
-            bonusCallBack?(shields, breakthrough)
+            bonusCallBack?()
             if shields < 0 {
                 updateScoreCallBack?(score, true)
             }
@@ -109,7 +110,7 @@ class Player: SKSpriteNode {
    
     var breakthrough = 0 {
         didSet {
-            bonusCallBack?(shields, breakthrough)
+            bonusCallBack?()
         }
     }
 
@@ -120,9 +121,9 @@ class Player: SKSpriteNode {
         let height = CGFloat(36)
         super.init(texture: texture, color: .clear, size: CGSize(width: height, height: height))
 
-        self.playerSpeed = setup.speed
+        self.playerSpeed = setup.calculatedSpeed
         self.shields = setup.shields
-        self.breakthrough = setup.breakthrouth
+        self.breakthrough = setup.breakthrouth + UserDefaultsManager.shared.breakthrough
         self.name = "player"
         self.zPosition = 1
 
@@ -150,7 +151,7 @@ class Player: SKSpriteNode {
         self.status = .movingToStation
         if isBreakthroughAble {
             breakthrough -= 1
-            
+            UserDefaultsManager.shared.breakthrough = -1
         }
         let duration = calculateTime(player: self.position, destination: point)
         let sqns = SKAction.sequence([.move(to: point, duration: duration),
@@ -180,7 +181,12 @@ class Player: SKSpriteNode {
                                          .colorize(withColorBlendFactor: 0, duration: 0)])
        
         self.run(redSqns)
-        shields -= 1
+        if shields > 0 {
+            shields -= 1
+        } else {
+            UserDefaultsManager.shared.shields = -1
+            bonusCallBack?()
+        }
         SoundManager.shared.playSoundEffect(filename: .damage)
     }
    

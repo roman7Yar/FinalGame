@@ -30,9 +30,9 @@ class GameViewController: UIViewController {
                 subview.removeFromSuperview()
             }
             
-            let hStackView = UIStackView()
-            hStackView.axis = .horizontal
-            hStackView.spacing = 16
+//            let hStackView = UIStackView()
+//            hStackView.axis = .horizontal
+//            hStackView.spacing = 16
             
             let menuStack = UIStackView()
             menuStack.axis = .vertical
@@ -59,13 +59,14 @@ class GameViewController: UIViewController {
             let shieldsLabel = setupShieldsLabel(size: 30)
             let breakthroughLabel = setupShieldsLabel(size: 24)
            
-            view.addSubview(hStackView)
+            view.addSubview(scoreLabel)
             view.addSubview(menuStack)
             view.addSubview(bonusVStack)
             view.addSubview(restartImgView)
             
+            
 //            hStackView.addArrangedSubview(coinsLabel)
-            hStackView.addArrangedSubview(scoreLabel)
+//            hStackView.addArrangedSubview(scoreLabel)
             
             menuStack.addArrangedSubview(settingsImgView)
             menuStack.addArrangedSubview(shopImgView)
@@ -81,16 +82,16 @@ class GameViewController: UIViewController {
                 self.setScene()
             }
 
-            scene.player.bonusCallBack = { shields, breakthrough in
-                if shields > 0 {
-                    shieldsLabel.text = "\(shields)"
+            scene.player.bonusCallBack = {
+                if scene.player.shields + UserDefaultsManager.shared.shields > 0 {
+                    shieldsLabel.text = "\(scene.player.shields + UserDefaultsManager.shared.shields)"
                     shieldImgView.alpha = 1
                 } else {
                     shieldImgView.alpha = 0.7
                     shieldsLabel.text = ""
                 }
-                if breakthrough > 0 {
-                    breakthroughLabel.text = "\(breakthrough)"
+                if scene.player.breakthrough > 0 {
+                    breakthroughLabel.text = "\(scene.player.breakthrough)"
                 } else {
                     breakthroughImgView.alpha = 0.7
                     breakthroughLabel.text = ""
@@ -125,8 +126,11 @@ class GameViewController: UIViewController {
                 SoundManager.shared.playSoundEffect(filename: .click)
                 let vc = ShopVC()
                 vc.updateBonusesCallback = { shields, breakthrough in
-                    scene.player.shields += shields
+                    UserDefaultsManager.shared.shields = shields
+//                    scene.player.shields += shields
                     scene.player.breakthrough += breakthrough
+                    
+                    UserDefaultsManager.shared.breakthrough = breakthrough
                     coinsLabel.text = "\(UserDefaultsManager.shared.coins)"
                 }
                 vc.modalPresentationStyle = .overFullScreen
@@ -140,15 +144,16 @@ class GameViewController: UIViewController {
                 breakthroughImgView.alpha = scene.player.isBreakthroughAble ? 1 : 0.5
             }
                         
-            hStackView.translatesAutoresizingMaskIntoConstraints = false
+//            hStackView.translatesAutoresizingMaskIntoConstraints = false
             menuStack.translatesAutoresizingMaskIntoConstraints = false
             bonusVStack.translatesAutoresizingMaskIntoConstraints = false
+            scoreLabel.translatesAutoresizingMaskIntoConstraints = false
             coinsLabel.translatesAutoresizingMaskIntoConstraints = false
             restartImgView.translatesAutoresizingMaskIntoConstraints = false
             
             NSLayoutConstraint.activate([
-                hStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-                hStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+                scoreLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+                scoreLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
                 
                 menuStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
                 menuStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),

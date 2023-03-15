@@ -70,7 +70,7 @@ class GameScene: SKScene {
         cam.position.y = player.position.y + 200
        
         clearNodes()
-        player.bonusCallBack?(player.shields, player.breakthrough)
+        player.bonusCallBack?()
         SoundManager.shared.playBackgroundMusic(filename: .spaceBG)
     }
     
@@ -197,7 +197,7 @@ extension GameScene: SKPhysicsContactDelegate {
             SoundManager.shared.playSoundEffect(filename: .bonus)
         } else {
             VibrationManager.shared.vibrate(for: .damage)
-            if player.shields > 0 {
+            if player.shields > 0 || UserDefaultsManager.shared.shields > 0 {
                 player.damage()
                 player.moveBack()
             } else {
