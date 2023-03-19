@@ -8,7 +8,7 @@
 import Foundation
 class UserDefaultsManager {
     enum Keys: String {
-        case player, score, coins, shield, breakthrough
+        case player, score, coins, shield, breakthrough, skins
         case vibration, sound, music, volume, musikVolume
     }
     
@@ -22,8 +22,19 @@ class UserDefaultsManager {
 //    private let coinsKey = "coins"
 //    private let shieldKey = "shield"
 //    private let breakthroughKey = "breakthroughKey"
+  
+    private var dict = [String: Bool]()
     
     private init() {
+        
+        PlayerSkin.allCases.forEach({ skin in
+           if skin == PlayerSkin.rocket0 {
+               dict[skin.rawValue] = true
+           } else {
+               dict[skin.rawValue] = false
+           }
+        })
+
         UserDefaults.standard.register(defaults: [
             Keys.player.rawValue : "rocket",
             Keys.vibration.rawValue : true,
@@ -34,15 +45,18 @@ class UserDefaultsManager {
             Keys.score.rawValue : 0,
             Keys.coins.rawValue : 0,
             Keys.shield.rawValue : 0,
-            Keys.breakthrough.rawValue : 0
+            Keys.breakthrough.rawValue : 0,
+            Keys.skins.rawValue : dict
         ])
     }
     
     static let shared = UserDefaultsManager()
     
-    var player: String {
-        get { UserDefaults.standard.string(forKey: Keys.player.rawValue)! }
-        set { UserDefaults.standard.set(newValue, forKey: Keys.player.rawValue) }
+    var player: PlayerSkin {
+        get {
+            PlayerSkin(rawValue: UserDefaults.standard.string(forKey: Keys.player.rawValue)!) ?? .rocket0
+        }
+        set { UserDefaults.standard.set(newValue.rawValue, forKey: Keys.player.rawValue) }
     }
     
     var score: Int {
@@ -112,6 +126,17 @@ class UserDefaultsManager {
         get { return UserDefaults.standard.integer(forKey: Keys.breakthrough.rawValue) }
         set { UserDefaults.standard.set(breakthrough + newValue, forKey: Keys.breakthrough.rawValue) }
     }
+    
+    var skins: [String: Bool] {
+        get {
+            return UserDefaults.standard.dictionary(forKey: Keys.skins.rawValue)! as! [String: Bool]
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: Keys.skins.rawValue)
+            print("\nSet skins: \(UserDefaultsManager.shared.skins)")
+        }
+    }
+    
 
 
 

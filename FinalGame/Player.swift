@@ -13,12 +13,12 @@ struct PlayerSetup {
     var calculatedSpeed: CGFloat { return speed * 800 }
     var shields = 0
     var breakthrouth = 0
-    var price: Int? = nil
+    var price = 0
 }
 
 enum PlayerSkin: String, CaseIterable {
     case rocket0, rocket1, rocket2, rocket3
-    var skin: PlayerSetup {
+    var skinSetup: PlayerSetup {
         switch self {
         case .rocket0:
             return PlayerSetup(name: .rocket0,
@@ -48,18 +48,7 @@ enum PlayerSkin: String, CaseIterable {
 
 class Player: SKSpriteNode {
     
-    var setup = {
-        switch UserDefaultsManager.shared.player {
-        case "rocket0":
-            return PlayerSkin.rocket0.skin
-        case "rocket1":
-            return PlayerSkin.rocket1.skin
-        case "rocket2":
-            return PlayerSkin.rocket2.skin
-        default:
-            return PlayerSkin.rocket3.skin
-        }
-    }()
+    var setup = UserDefaultsManager.shared.player.skinSetup
     
     var status = PlayerStatus.arrivedOnStation {
         didSet {
@@ -80,7 +69,7 @@ class Player: SKSpriteNode {
                 updateScoreCallBack?(score, false)
             } else {
                 self.physicsBody?.contactTestBitMask = BitMask.bonus | BitMask.enemy
-                playerSpeed = setup.speed
+                playerSpeed = setup.calculatedSpeed
             }
         }
     }
