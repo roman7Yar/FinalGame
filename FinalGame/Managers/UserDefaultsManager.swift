@@ -7,22 +7,12 @@
 
 import Foundation
 class UserDefaultsManager {
-    enum Keys: String {
+  
+    private enum Keys: String {
         case player, score, coins, shield, breakthrough, skins
         case vibration, sound, music, volume, musikVolume
     }
-    
-//    private let playerKey = "player"
-//    private let vibrationKey = "vibration"
-//    private let soundKey = "sound"
-//    private let musicKey = "music"
-//    private let volumeKey = "volume"
-//    private let musikVolumeKey = "musikVolume"
-//    private let scoreKey = "score"
-//    private let coinsKey = "coins"
-//    private let shieldKey = "shield"
-//    private let breakthroughKey = "breakthroughKey"
-  
+      
     private var dict = [String: Bool]()
     
     private init() {
@@ -99,7 +89,6 @@ class UserDefaultsManager {
             }
         }
     }
-
     
     var soundsVolume: Float {
         get { return UserDefaults.standard.float(forKey: Keys.volume.rawValue) }
@@ -136,8 +125,5 @@ class UserDefaultsManager {
             print("\nSet skins: \(UserDefaultsManager.shared.skins)")
         }
     }
-    
-
-
 
 }

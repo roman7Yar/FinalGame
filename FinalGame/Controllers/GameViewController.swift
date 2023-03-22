@@ -29,11 +29,7 @@ class GameViewController: UIViewController {
             for subview in view.subviews {
                 subview.removeFromSuperview()
             }
-            
-//            let hStackView = UIStackView()
-//            hStackView.axis = .horizontal
-//            hStackView.spacing = 16
-            
+                        
             let menuStack = UIStackView()
             menuStack.axis = .vertical
             menuStack.spacing = 16
@@ -63,10 +59,6 @@ class GameViewController: UIViewController {
             view.addSubview(menuStack)
             view.addSubview(bonusVStack)
             view.addSubview(restartImgView)
-            
-            
-//            hStackView.addArrangedSubview(coinsLabel)
-//            hStackView.addArrangedSubview(scoreLabel)
             
             menuStack.addArrangedSubview(settingsImgView)
             menuStack.addArrangedSubview(shopImgView)
@@ -127,7 +119,6 @@ class GameViewController: UIViewController {
                 let vc = ShopVC()
                 vc.updateBonusesCallback = { shields, breakthrough in
                     UserDefaultsManager.shared.shields = shields
-//                    scene.player.shields += shields
                     scene.player.breakthrough += breakthrough
                     
                     UserDefaultsManager.shared.breakthrough = breakthrough
@@ -144,7 +135,6 @@ class GameViewController: UIViewController {
                 breakthroughImgView.alpha = scene.player.isBreakthroughAble ? 1 : 0.5
             }
                         
-//            hStackView.translatesAutoresizingMaskIntoConstraints = false
             menuStack.translatesAutoresizingMaskIntoConstraints = false
             bonusVStack.translatesAutoresizingMaskIntoConstraints = false
             scoreLabel.translatesAutoresizingMaskIntoConstraints = false

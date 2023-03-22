@@ -57,7 +57,7 @@ class SettingsVC: UIViewController {
         soundVolumeView.currentBars = Int(UserDefaultsManager.shared.soundsVolume * 10)
         musicVolumeView.currentBars = Int(UserDefaultsManager.shared.musicVolume * 10)
         
-        view.backgroundColor = UIColor(cgColor: CGColor(red: 0, green: 0, blue: 0, alpha: 0.75))
+        view.backgroundColor = UIColor(cgColor: CGColor(red: 0, green: 0, blue: 0, alpha: 0.8))
         
         view.addSubview(titleLabel)
         view.addSubview(stackView)

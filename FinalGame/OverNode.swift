@@ -20,7 +20,7 @@ class OverNode: SKNode {
         self.isUserInteractionEnabled = true
         
         let overLayer = SKShapeNode(rectOf: size)
-        overLayer.fillColor = .black.withAlphaComponent(0.5)
+        overLayer.fillColor = .black.withAlphaComponent(0.7)
         overLayer.lineWidth = 0
         
         

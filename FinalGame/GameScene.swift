@@ -106,14 +106,6 @@ class GameScene: SKScene {
             
             addChild(levelLabelCopy)
             
-            if currentLevel == .level5 {
-                player.playerSpeed *= 1.5
-                let copy = levelLabel.copy() as! SKLabelNode
-                copy.position.x = StationsSetter.arrOfPoints.first!.x
-                copy.position.y = StationsSetter.arrOfPoints.first!.y - 170//station.frame.height
-                copy.text = "Speed 1.5x"
-                addChild(copy)
-            }
         }
     }
    
@@ -146,10 +138,6 @@ class GameScene: SKScene {
         
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-//        self.resignFirstResponder()
-//        print("TouchesBegan")
-//        let touchPoint = touches.first!.location(in: view)
-//        guard touchPoint.x < view!.frame.maxX - 40 else { return }
         guard player.status == .arrivedOnStation || player.status == .arrivedBack else {
             return
         }
@@ -165,6 +153,7 @@ class GameScene: SKScene {
         let xPoint = (self.player.position.x + StationsSetter.arrOfPoints.first!.x) / 2
         let yPoint = self.player.position.y + 200
         self.cam.run(.move(to: CGPoint(x: xPoint, y: yPoint), duration: 0.3))
+        quake()
     }
     
     func showGameOver() {
@@ -175,6 +164,17 @@ class GameScene: SKScene {
         cam.addChild(overNode)
         SoundManager.shared.playSoundEffect(filename: .damage)
         VibrationManager.shared.vibrate(for: .damage)
+    }
+    
+    func quake() {
+        let d = CGFloat(8)
+        let time = TimeInterval(0.01)
+        let sqns = SKAction.sequence([
+            .moveBy(x: d, y: d, duration: time),
+            .moveBy(x: -d, y: d, duration: time),
+            .moveBy(x: d, y: -d, duration: time),
+            .moveBy(x: -d, y: -d, duration: time)])
+        cam.run(.repeat(sqns, count: 4))
     }
 }
 
@@ -197,14 +197,13 @@ extension GameScene: SKPhysicsContactDelegate {
             SoundManager.shared.playSoundEffect(filename: .bonus)
         } else {
             VibrationManager.shared.vibrate(for: .damage)
+            player.damage()
             if player.shields > 0 || UserDefaultsManager.shared.shields > 0 {
-                player.damage()
                 player.moveBack()
             } else {
                 guard player.status != .dead else { return }
                 player.status = .dead
                 player.isPaused = true
-                player.damage()
                 showGameOver()
                 UserDefaultsManager.shared.score = player.score
             }

@@ -53,12 +53,16 @@ class Player: SKSpriteNode {
     var status = PlayerStatus.arrivedOnStation {
         didSet {
             guard status == .arrivedOnStation else { return }
+            playerEmitter?.isHidden = true
             isBreakthroughAble = false
             score += 1
             playerLandedCallBack?()
             updateScoreCallBack?(score, false)
         }
     }
+    
+    var playerEmitter = SKEmitterNode(fileNamed: "rocketFlame.sks")
+    
     var isBreakthroughAble = false {
         didSet {
             guard oldValue != isBreakthroughAble else { return }
@@ -81,7 +85,7 @@ class Player: SKSpriteNode {
             UserDefaultsManager.shared.coins = 1
         }
     }
-//    var coins = UserDefaultsManager.shared.coins
+    
     var playerSpeed = CGFloat(800) // per second
    
     var updateScoreCallBack: ((Int, Bool) -> ())?
@@ -109,7 +113,12 @@ class Player: SKSpriteNode {
         let texture = SKTexture(imageNamed: rocket.rawValue)
         let height = CGFloat(36)
         super.init(texture: texture, color: .clear, size: CGSize(width: height, height: height))
-
+    
+        self.addChild(playerEmitter!)
+        playerEmitter?.position.x = self.position.x
+        playerEmitter?.position.y = self.frame.minY
+        playerEmitter?.isHidden = false
+      
         self.playerSpeed = setup.calculatedSpeed
         self.shields = setup.shields
         self.breakthrough = setup.breakthrouth + UserDefaultsManager.shared.breakthrough
@@ -138,6 +147,7 @@ class Player: SKSpriteNode {
     
     func moveToNextStation(at point: CGPoint) {
         self.status = .movingToStation
+        playerEmitter?.isHidden = false
         if isBreakthroughAble {
             breakthrough -= 1
             UserDefaultsManager.shared.breakthrough = -1
@@ -155,6 +165,7 @@ class Player: SKSpriteNode {
     }
     
     func moveBack() {
+        playerEmitter?.isHidden = true
         self.status = .movingBack
         self.removeAction(forKey: "jump")
         self.run(.move(to: previousPosition, duration: 0.2)) {

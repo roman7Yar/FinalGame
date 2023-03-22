@@ -48,7 +48,7 @@ class ShopVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .init(white: 0, alpha: 0.6)
+        view.backgroundColor = .init(white: 0, alpha: 0.8)
         
         let shieldLabel = createLabel(withTitle: "Shield: 20 coins")
         let breakthroughLabel = createLabel(withTitle: "Breakthrough: 50 coins")
@@ -175,8 +175,8 @@ class ShopVC: UIViewController {
         let speed = "speed: \(setup.speed)  "
         let shields = "shields: \(setup.shields)"
         let breakthrouth = "\nbreakthrouth: \(setup.breakthrouth)  "
-        let price = "price: \(setup.price ?? 0)"
-        let result = speed + shields + breakthrouth + price// + breakthrough
+        let price = "price: \(setup.price)"
+        let result = speed + shields + breakthrouth + price
         skinInfoLabel.text = result
     }
     
