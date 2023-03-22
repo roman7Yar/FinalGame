@@ -117,7 +117,7 @@ class Player: SKSpriteNode {
         self.addChild(playerEmitter!)
         playerEmitter?.position.x = self.position.x
         playerEmitter?.position.y = self.frame.minY
-        playerEmitter?.isHidden = false
+        playerEmitter?.isHidden = true
       
         self.playerSpeed = setup.calculatedSpeed
         self.shields = setup.shields

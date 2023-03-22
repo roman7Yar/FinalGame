@@ -80,13 +80,13 @@ class GameScene: SKScene {
             switch player.score {
             case -1...5:
                 return Level.level1
-            case 6...10:
+            case 6...15:
                 return Level.level2
-            case 11...20:
+            case 16...30:
                 return Level.level3
-            case 21...30:
-                return Level.level4
             case 31...40:
+                return Level.level4
+            case 41...55:
                 return Level.level5
             default:
                 return Level.infinity
@@ -123,13 +123,20 @@ class GameScene: SKScene {
     
     func removeAsteroids() {
         let nodes = scene!.nodes(at: player.position)
-       
+        let i = currentLevel == .infinity ? 2 : 1
+        var count = 0
         nodes.forEach { node in
             guard node.name == "station" else { return }
             node.children.forEach { asteroid in
-                asteroid.physicsBody = nil
-                asteroid.run(.scale(to: .zero, duration: 0.3)) {
+                count += 1
+                if asteroid.physicsBody?.categoryBitMask == BitMask.bonus {
                     asteroid.removeFromParent()
+                }
+                if count % i == 0 {
+                    asteroid.physicsBody = nil
+                    asteroid.run(.scale(to: .zero, duration: 0.3)) {
+                        asteroid.removeFromParent()
+                    }
                 }
             }
         }
@@ -197,7 +204,6 @@ extension GameScene: SKPhysicsContactDelegate {
             SoundManager.shared.playSoundEffect(filename: .bonus)
         } else {
             VibrationManager.shared.vibrate(for: .damage)
-            player.damage()
             if player.shields > 0 || UserDefaultsManager.shared.shields > 0 {
                 player.moveBack()
             } else {
@@ -207,6 +213,7 @@ extension GameScene: SKPhysicsContactDelegate {
                 showGameOver()
                 UserDefaultsManager.shared.score = player.score
             }
+            player.damage()
         }
         
     }
