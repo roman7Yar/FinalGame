@@ -53,7 +53,7 @@ class Player: SKSpriteNode {
     var status = PlayerStatus.arrivedOnStation {
         didSet {
             guard status == .arrivedOnStation else { return }
-            playerEmitter?.isHidden = true
+//            playerEmitter?.isHidden = true
             isBreakthroughAble = false
             score += 1
             playerLandedCallBack?()
@@ -61,7 +61,7 @@ class Player: SKSpriteNode {
         }
     }
     
-    var playerEmitter = SKEmitterNode(fileNamed: "rocketFlame.sks")
+    var playerEmitter = SKEmitterNode(fileNamed: "fire.sks")
     
     var isBreakthroughAble = false {
         didSet {
@@ -117,7 +117,7 @@ class Player: SKSpriteNode {
         self.addChild(playerEmitter!)
         playerEmitter?.position.x = self.position.x
         playerEmitter?.position.y = self.frame.minY
-        playerEmitter?.isHidden = true
+//        playerEmitter?.isHidden = false
       
         self.playerSpeed = setup.calculatedSpeed
         self.shields = setup.shields
@@ -147,7 +147,7 @@ class Player: SKSpriteNode {
     
     func moveToNextStation(at point: CGPoint) {
         self.status = .movingToStation
-        playerEmitter?.isHidden = false
+//        playerEmitter?.isHidden = false
         if isBreakthroughAble {
             breakthrough -= 1
             UserDefaultsManager.shared.breakthrough = -1
@@ -165,7 +165,7 @@ class Player: SKSpriteNode {
     }
     
     func moveBack() {
-        playerEmitter?.isHidden = true
+//        playerEmitter?.isHidden = true
         self.status = .movingBack
         self.removeAction(forKey: "jump")
         self.run(.move(to: previousPosition, duration: 0.2)) {

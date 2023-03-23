@@ -71,6 +71,7 @@ class GameScene: SKScene {
        
         clearNodes()
         player.bonusCallBack?()
+        player.playerEmitter?.targetNode = self
         SoundManager.shared.playBackgroundMusic(filename: .spaceBG)
     }
     
