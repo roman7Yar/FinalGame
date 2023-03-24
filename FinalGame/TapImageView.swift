@@ -86,15 +86,16 @@ class SkinButton: UIButton {
         self.layer.borderWidth = 1
         self.layer.borderColor = .init(red: 1, green: 1, blue: 1, alpha: 1)
         setImage(image.image.resized(to: CGSize(width: 80, height: 80)), for: .normal)
-//        setTitleColor(.black, for: .normal)
     }
     
     init(title: String) {
         super.init(frame: .zero)
         self.setTitle(title, for: .normal)
+        let buttonTextWidth = self.titleLabel?.intrinsicContentSize.width ?? 0
         self.layer.cornerRadius = 10
         self.backgroundColor = .init(white: 1, alpha: 0.25)
         setTitleColor(.white, for: .normal)
+        self.widthAnchor.constraint(greaterThanOrEqualToConstant: buttonTextWidth + 16).isActive = true
     }
 
     required init?(coder: NSCoder) {

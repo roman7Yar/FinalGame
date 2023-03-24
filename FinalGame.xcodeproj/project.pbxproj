@@ -23,7 +23,10 @@
 		C37975B529B5E9500008E068 /* TapImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37975B429B5E9500008E068 /* TapImageView.swift */; };
 		C37975B729B62C450008E068 /* ShopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37975B629B62C450008E068 /* ShopVC.swift */; };
 		C37975B929CB5A9D0008E068 /* rocketFlame.sks in Resources */ = {isa = PBXBuildFile; fileRef = C37975B829CB5A9B0008E068 /* rocketFlame.sks */; };
-		C37975BB29CC5C780008E068 /* fire.sks in Resources */ = {isa = PBXBuildFile; fileRef = C37975BA29CC5C780008E068 /* fire.sks */; };
+		C37975BB29CC5C780008E068 /* rocket2.sks in Resources */ = {isa = PBXBuildFile; fileRef = C37975BA29CC5C780008E068 /* rocket2.sks */; };
+		C37975BD29CCA5AB0008E068 /* rocket0.sks in Resources */ = {isa = PBXBuildFile; fileRef = C37975BC29CCA5AB0008E068 /* rocket0.sks */; };
+		C37975BF29CCA6A70008E068 /* rocket1.sks in Resources */ = {isa = PBXBuildFile; fileRef = C37975BE29CCA6A70008E068 /* rocket1.sks */; };
+		C37975C129CCA7AC0008E068 /* rocket3.sks in Resources */ = {isa = PBXBuildFile; fileRef = C37975C029CCA7AC0008E068 /* rocket3.sks */; };
 		C3A6DB0329AA3C4B00F797B0 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A6DB0229AA3C4B00F797B0 /* UserDefaultsManager.swift */; };
 		C3A6DB0529AA439600F797B0 /* OverNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A6DB0429AA439600F797B0 /* OverNode.swift */; };
 		C3A6DB0729AA4ED100F797B0 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A6DB0629AA4ED100F797B0 /* SettingsVC.swift */; };
@@ -54,7 +57,10 @@
 		C37975B429B5E9500008E068 /* TapImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapImageView.swift; sourceTree = "<group>"; };
 		C37975B629B62C450008E068 /* ShopVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopVC.swift; sourceTree = "<group>"; };
 		C37975B829CB5A9B0008E068 /* rocketFlame.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = rocketFlame.sks; sourceTree = "<group>"; };
-		C37975BA29CC5C780008E068 /* fire.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = fire.sks; sourceTree = "<group>"; };
+		C37975BA29CC5C780008E068 /* rocket2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = rocket2.sks; sourceTree = "<group>"; };
+		C37975BC29CCA5AB0008E068 /* rocket0.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = rocket0.sks; sourceTree = "<group>"; };
+		C37975BE29CCA6A70008E068 /* rocket1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = rocket1.sks; sourceTree = "<group>"; };
+		C37975C029CCA7AC0008E068 /* rocket3.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = rocket3.sks; sourceTree = "<group>"; };
 		C3A6DB0229AA3C4B00F797B0 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		C3A6DB0429AA439600F797B0 /* OverNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverNode.swift; sourceTree = "<group>"; };
 		C3A6DB0629AA4ED100F797B0 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
@@ -140,7 +146,10 @@
 				C37975B029ACF6710008E068 /* StationsSetter.swift */,
 				C30B51B229A5088D00E43094 /* Enemy.swift */,
 				C37975B829CB5A9B0008E068 /* rocketFlame.sks */,
-				C37975BA29CC5C780008E068 /* fire.sks */,
+				C37975BA29CC5C780008E068 /* rocket2.sks */,
+				C37975BE29CCA6A70008E068 /* rocket1.sks */,
+				C37975C029CCA7AC0008E068 /* rocket3.sks */,
+				C37975BC29CCA5AB0008E068 /* rocket0.sks */,
 				C379759D29ACB2290008E068 /* Bonus.swift */,
 				C30B51B429A79FE600E43094 /* Levels.swift */,
 				C37975A329ACEEC50008E068 /* VolumeView.swift */,
@@ -215,14 +224,17 @@
 			files = (
 				C37975AB29ACF1210008E068 /* click.mp3 in Resources */,
 				C37975AD29ACF1210008E068 /* damage.mp3 in Resources */,
+				C37975BD29CCA5AB0008E068 /* rocket0.sks in Resources */,
+				C37975BF29CCA6A70008E068 /* rocket1.sks in Resources */,
 				C37975AE29ACF1210008E068 /* bonus.mp3 in Resources */,
+				C37975C129CCA7AC0008E068 /* rocket3.sks in Resources */,
 				C37975B329ACF7A80008E068 /* tap.mp3 in Resources */,
 				C3BB9BBD29A4CEE3008796BD /* Main.storyboard in Resources */,
 				C37975B929CB5A9D0008E068 /* rocketFlame.sks in Resources */,
 				C37975AC29ACF1210008E068 /* spaceBG.mp3 in Resources */,
 				C37975AF29ACF1210008E068 /* jump.mp3 in Resources */,
 				C3BB9BBF29A4CEE6008796BD /* Assets.xcassets in Resources */,
-				C37975BB29CC5C780008E068 /* fire.sks in Resources */,
+				C37975BB29CC5C780008E068 /* rocket2.sks in Resources */,
 				C3BB9BC229A4CEE6008796BD /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

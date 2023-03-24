@@ -61,7 +61,8 @@ class Player: SKSpriteNode {
         }
     }
     
-    var playerEmitter = SKEmitterNode(fileNamed: "fire.sks")
+    lazy var playerEmitter = SKEmitterNode(fileNamed: setup.name.rawValue)
+    var particleBirthRate = CGFloat(2000)
     
     var isBreakthroughAble = false {
         didSet {
@@ -70,10 +71,15 @@ class Player: SKSpriteNode {
                 guard breakthrough > 0 else { return }
                 self.physicsBody?.contactTestBitMask = BitMask.bonus
                 playerSpeed = 2000
+                playerEmitter?.particleScaleRange = 1
+                playerEmitter?.particleBirthRate = 6000
                 updateScoreCallBack?(score, false)
             } else {
                 self.physicsBody?.contactTestBitMask = BitMask.bonus | BitMask.enemy
                 playerSpeed = setup.calculatedSpeed
+                playerEmitter?.particleScaleRange = 0.5
+                playerEmitter?.particleBirthRate = particleBirthRate
+
             }
         }
     }
@@ -117,8 +123,8 @@ class Player: SKSpriteNode {
         self.addChild(playerEmitter!)
         playerEmitter?.position.x = self.position.x
         playerEmitter?.position.y = self.frame.minY
-//        playerEmitter?.isHidden = false
-      
+        particleBirthRate = playerEmitter!.particleBirthRate
+
         self.playerSpeed = setup.calculatedSpeed
         self.shields = setup.shields
         self.breakthrough = setup.breakthrouth + UserDefaultsManager.shared.breakthrough
