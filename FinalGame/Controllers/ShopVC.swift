@@ -71,7 +71,7 @@ class ShopVC: UIViewController {
         }
         
         let skinButtons = PlayerSkin.allCases.map { skin in
-            return SkinButton(image: skin)
+            return SkinImgView(image: skin)
         }
         
         skinButtons.forEach { button in
@@ -80,7 +80,7 @@ class ShopVC: UIViewController {
         
         skinButtons.forEach { button in
             stackView.addArrangedSubview(button)
-            if UserDefaultsManager.shared.player.rawValue == button.image?.rawValue {
+            if UserDefaultsManager.shared.player.rawValue == button.skinImage!.rawValue {
                 selectSkin(button)
             }
         }
@@ -151,8 +151,9 @@ class ShopVC: UIViewController {
         ])
     }
     
-    private func selectSkin(_ sender: SkinButton) {
-        let skin = PlayerSkin(rawValue: sender.image!.rawValue)!
+    private func selectSkin(_ sender: SkinImgView) {
+        let skin = PlayerSkin(rawValue: sender.skinImage!
+            .rawValue)!
         let skinsInfo = UserDefaultsManager.shared.skins
         
         if skin == UserDefaultsManager.shared.player {
@@ -163,10 +164,10 @@ class ShopVC: UIViewController {
             button.setTitle("Buy", for: .normal)
         }
         stackView.arrangedSubviews.forEach { view in
-            guard let button = view as? SkinButton else { return }
-            button.isSelected2 = false
+            guard let button = view as? SkinImgView else { return }
+            button.isSelected = false
         }
-        sender.isSelected2 = true
+        sender.isSelected = true
         getSkinInfo(skin.skinSetup)
         currentSkin = skin
     }

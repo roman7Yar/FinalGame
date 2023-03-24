@@ -8,9 +8,12 @@
 import UIKit
 
 class TapImageView: UIImageView {
-    private var tapImage: TapImage
+    private var tapImage: TapImage?
     
     private var tapAction: (() -> ())?
+    
+    private(set) var skinImage: PlayerSkin?
+
     
     init(tapImage: TapImage) {
         self.tapImage = tapImage
@@ -19,11 +22,21 @@ class TapImageView: UIImageView {
         self.image = tapImage.image
     }
     
+    init(image: PlayerSkin) {
+        self.skinImage = image
+        super.init(frame: .zero)
+        self.layer.cornerRadius = 15
+        self.layer.borderWidth = 1
+        self.layer.borderColor = .init(red: 1, green: 1, blue: 1, alpha: 1)
+        self.image = image.image.resized(to: CGSize(width: 80, height: 80))
+    }
+
+    
     required init?(coder aDecoder: NSCoder) {
         self.tapImage = .settings
         super.init(coder: aDecoder)
         addTapGesture()
-        self.image = tapImage.image
+        self.image = tapImage!.image
     }
         
     private func addTapGesture() {
@@ -59,6 +72,60 @@ class TapImageView: UIImageView {
             }
         }
     }
+}
+
+class SkinImgView: UIImageView {
+    
+    var isSelected = false {
+        didSet {
+            if isSelected {
+                self.layer.borderWidth = 2
+                self.layer.borderColor = .init(red: 0.5, green: 1, blue: 0.5, alpha: 1)
+
+            } else {
+                self.layer.borderWidth = 1
+                self.layer.borderColor = .init(red: 1, green: 1, blue: 1, alpha: 1)
+            }
+        }
+    }
+
+    private var tapAction: ((SkinImgView) -> ())?
+    
+    private(set) var skinImage: PlayerSkin?
+
+    init(image: PlayerSkin) {
+        self.skinImage = image
+        super.init(frame: .zero)
+        self.layer.cornerRadius = 15
+        self.layer.borderWidth = 1
+        self.layer.borderColor = .init(red: 1, green: 1, blue: 1, alpha: 1)
+        self.image = image.image.resized(to: CGSize(width: 80, height: 80))
+        addTapGesture()
+    }
+
+    
+    required init?(coder aDecoder: NSCoder) {
+        self.skinImage = .rocket0
+        super.init(coder: aDecoder)
+        addTapGesture()
+    }
+        
+    private func addTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
+        
+        tapGesture.delaysTouchesBegan = true
+        self.isUserInteractionEnabled = true
+        self.addGestureRecognizer(tapGesture)
+    }
+    
+    func addTapAction(_ action: @escaping (SkinImgView) -> ()) {
+        tapAction = action
+    }
+    
+    @objc private func handleTapGesture(_ sender: SkinImgView) {
+        tapAction?(sender)
+    }
+
 }
 
 class SkinButton: UIButton {
